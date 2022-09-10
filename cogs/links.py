@@ -29,7 +29,7 @@ class Links(commands.Cog):
     async def dellink(self, ctx, name):
         doc = await lc.find_one({"_id": ctx.guild.id})
         try:
-            val = doc[name]
+            val = doc[name.lower()]
             lc.update_one({"_id": ctx.guild.id}, {"$unset": {name: val}})
             return await ctx.respond(f"link for {name} removed.")
         except KeyError:
