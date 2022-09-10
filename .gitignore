@@ -1,0 +1,4 @@
+ts.py
+.env
+cogs/__pycache__/*
+__pycache__/*
