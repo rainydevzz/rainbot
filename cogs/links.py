@@ -10,6 +10,7 @@ class Links(commands.Cog):
     lcmd = discord.SlashCommandGroup(name="links", description="links commands")
 
     @lcmd.command(name="addlink", description="add a link to the db")
+    @commands.has_permissions(administrator=True)
     async def addlink(self, ctx, link, name):
         await lc.update_one(
             {
@@ -26,6 +27,7 @@ class Links(commands.Cog):
         await ctx.respond(f"link for {name} added successfully. Please note that names are set to lowercase in the database.")
 
     @lcmd.command(name="deletelink", description="delete a link from the db")
+    @commands.has_permissions(administrator=True)
     async def dellink(self, ctx, name):
         doc = await lc.find_one({"_id": ctx.guild.id})
         try:

@@ -9,11 +9,13 @@ class Tags(commands.Cog):
     tagcmd = discord.SlashCommandGroup(name="tags", description="tags commands")
 
     @tagcmd.command(name="add", description="add or update a tag")
+    @commands.has_permissions(administrator=True)
     async def add(self, ctx, name, content):
         await tc.update_one({"_id": ctx.guild.id}, {"$set": {name.lower(): content}}, upsert=True)
         await ctx.respond(f"tag `{name}` added!")
 
     @tagcmd.command(name="remove", description="remove a tag")
+    @commands.has_permissions(administrator=True)
     async def remove(self, ctx, name):
         try:   
             doc = await tc.find_one({"_id": ctx.guild.id})

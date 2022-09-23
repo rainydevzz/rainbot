@@ -8,6 +8,7 @@ class Greets(commands.Cog):
         self.bot = bot
     
     @discord.slash_command(name="welcomesetup", description="welcome setup")
+    @commands.has_permissions(administrator=True)
     async def welcome_setup(self, ctx, channel:discord.TextChannel, message):
         await gc.update_one(
             {
@@ -24,6 +25,7 @@ class Greets(commands.Cog):
         await ctx.respond("Setup Done!")
 
     @discord.slash_command(name="goodbyesetup", description="goodbye setup")
+    @commands.has_permissions(administrator=True)
     async def goodbye_setup(self, ctx, channel:discord.TextChannel, message):
         await gc.update_one(
             {
