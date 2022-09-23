@@ -13,6 +13,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient(mstr)
 db = client.rain
 greetColl = db["greets"]
 linksColl = db["links"]
+tagsColl = db["tags"]
 
 intents = discord.Intents.all()
 bot = discord.Bot(intents=intents)
