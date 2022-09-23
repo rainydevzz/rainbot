@@ -30,7 +30,7 @@ class Links(commands.Cog):
         doc = await lc.find_one({"_id": ctx.guild.id})
         try:
             val = doc[name.lower()]
-            lc.update_one({"_id": ctx.guild.id}, {"$unset": {name: val}})
+            await lc.update_one({"_id": ctx.guild.id}, {"$unset": {name: val}})
             return await ctx.respond(f"link for {name} removed.")
         except KeyError:
             return await ctx.respond("no link found by that name.")
