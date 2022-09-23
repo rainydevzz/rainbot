@@ -21,7 +21,7 @@ class Tags(commands.Cog):
             await ctx.respond(f"tag `{name}` removed!")
 
         except:
-            await ctx.respond(f"could not find that tag.")
+            await ctx.respond("could not find that tag.")
 
     @tagcmd.command(name="viewall", description="view all tags")
     async def viewall(self, ctx):
@@ -44,7 +44,7 @@ class Tags(commands.Cog):
             await ctx.respond(tag)
 
         except:
-            await ctx.respond("no tag found")
+            await ctx.respond("could not find that tag.")
 
 def setup(bot):
     bot.add_cog(Tags(bot))
