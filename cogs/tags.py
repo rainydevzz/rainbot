@@ -29,12 +29,8 @@ class Tags(commands.Cog):
     async def viewall(self, ctx):
         doc = await tc.find_one({"_id": ctx.guild.id})
         doc.pop("_id")
-        dstr = ""
 
-        for item in doc.keys():
-            dstr += f"`{item}`\n"
-
-        em = discord.Embed(title="Tags", description=dstr, color=discord.Color.embed_background(theme="dark"))
+        em = discord.Embed(title="Tags", description=list(doc.keys()), color=discord.Color.embed_background(theme="dark"))
         await ctx.respond(embed=em)
 
     @tagcmd.command(name="view", description="view a tag")

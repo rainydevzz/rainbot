@@ -9,13 +9,13 @@ class RoleHandler(commands.Cog):
     @discord.slash_command()
     @commands.has_permissions(administrator=True)
     async def roledelete(self, ctx, filter):
-        await ctx.defer()
+        await ctx.interaction.response.send_message("deleting roles, please wait...", ephemeral=True)
         for role in ctx.guild.roles:
             if filter in role.name.lower():
                 await role.delete()
-                await asyncio.sleep(2.5)
+                await asyncio.sleep(1.1)
             
-        await ctx.respond("Deleted all roles under that filter!", ephemeral=True)
+        await ctx.interaction.edit_original_message(content="Deleted all roles under that filter!")
 
 def setup(bot):
     bot.add_cog(RoleHandler(bot))
