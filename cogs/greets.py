@@ -53,6 +53,7 @@ class Greets(commands.Cog):
             msg = doc["wmessage"]
             em = discord.Embed(title=f"Welcome {member.name}!", description=msg, color=discord.Color.embed_background(theme="dark"))
             em.set_thumbnail(url=member.display_avatar.url)
+            em.set_footer(text=f"Member #{member.guild.member_count}", icon_url=self.bot.user.avatar.url)
 
             await ch.send(embed=em)
         except Exception as e:
