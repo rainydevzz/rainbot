@@ -11,10 +11,10 @@ class Links(commands.Cog):
 
     @lcmd.command(name="addlink", description="add a link to the db")
     @commands.has_permissions(administrator=True)
-    async def addlink(self, ctx, link, name):
+    async def addlink(self, ctx: discord.Application.Context, link: str, name: str):
         await lc.update_one(
             {
-                "_id": ctx.guild.id
+                "_id": str(ctx.guild.id)
             },
             {
                 "$set": {
@@ -28,18 +28,18 @@ class Links(commands.Cog):
 
     @lcmd.command(name="deletelink", description="delete a link from the db")
     @commands.has_permissions(administrator=True)
-    async def dellink(self, ctx, name):
+    async def dellink(self, ctx: discord.ApplicationContext, name: str):
         doc = await lc.find_one({"_id": ctx.guild.id})
         try:
             val = doc[name.lower()]
-            await lc.update_one({"_id": ctx.guild.id}, {"$unset": {name: val}})
+            await lc.update_one({"_id": str(ctx.guild.id)}, {"$unset": {name: val}})
             return await ctx.respond(f"link for {name} removed.")
         except KeyError:
             return await ctx.respond("no link found by that name.")
         
     @lcmd.command(name="viewlinks", description="view Rainy's links")
     async def viewlinks(self, ctx):
-        doc = await lc.find_one({"_id": ctx.guild.id})
+        doc = await lc.find_one({"_id": str(ctx.guild.id)})
         doc.pop("_id")
         em = discord.Embed(title="Rainy's Links!", description="View Rainy's links below!", color=discord.Color.embed_background(theme="dark"))
         em.set_thumbnail(url=ctx.guild.owner.display_avatar.url)
