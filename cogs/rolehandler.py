@@ -8,7 +8,7 @@ class RoleHandler(commands.Cog):
 
     @discord.slash_command()
     @commands.has_permissions(administrator=True)
-    async def roledelete(self, ctx: discord.ApplicationContext, filter: str):
+    async def roledelete(self, ctx, filter):
         await ctx.interaction.response.send_message("deleting roles, please wait...", ephemeral=True)
         for role in ctx.guild.roles:
             if filter in role.name.lower():

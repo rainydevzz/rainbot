@@ -10,32 +10,32 @@ class Tags(commands.Cog):
 
     @tagcmd.command(name="add", description="add or update a tag")
     @commands.has_permissions(administrator=True)
-    async def add(self, ctx: discord.ApplicationContext, name: str, content: str):
-        await tc.update_one({"_id": str(ctx.guild.id)}, {"$set": {name.lower(): content}}, upsert=True)
+    async def add(self, ctx, name, content):
+        await tc.update_one({"_id": ctx.guild.id}, {"$set": {name.lower(): content}}, upsert=True)
         await ctx.respond(f"tag `{name}` added!")
 
     @tagcmd.command(name="remove", description="remove a tag")
     @commands.has_permissions(administrator=True)
-    async def remove(self, ctx: discord.ApplicationContext, name: str):
+    async def remove(self, ctx, name):
         try:   
-            doc = await tc.find_one({"_id": str(ctx.guild.id)})
-            await tc.update_one({"_id": str(ctx.guild.id)}, {"$unset": {name.lower(): doc[name]}})
+            doc = await tc.find_one({"_id": ctx.guild.id})
+            await tc.update_one({"_id": ctx.guild.id}, {"$unset": {name.lower(): doc[name]}})
             await ctx.respond(f"tag `{name}` removed!")
 
         except:
             await ctx.respond("could not find that tag.")
 
     @tagcmd.command(name="viewall", description="view all tags")
-    async def viewall(self, ctx: discord.ApplicationContext):
-        doc = await tc.find_one({"_id": str(ctx.guild.id)})
+    async def viewall(self, ctx):
+        doc = await tc.find_one({"_id": ctx.guild.id})
         doc.pop("_id")
 
         em = discord.Embed(title="Tags", description=", ".join(list(doc.keys())), color=discord.Color.embed_background(theme="dark"))
         await ctx.respond(embed=em)
 
     @tagcmd.command(name="view", description="view a tag")
-    async def view(self, ctx: discord.ApplicationContext, name: str):
-        doc = await tc.find_one({"_id": str(ctx.guild.id)})
+    async def view(self, ctx, name):
+        doc = await tc.find_one({"_id": ctx.guild.id})
         doc.pop("_id")
         try:
             tag = doc[name.lower()]
