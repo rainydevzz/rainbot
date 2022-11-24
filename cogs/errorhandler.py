@@ -12,3 +12,6 @@ class ErrorHandler(discord.Cog):
 
         else:
             return await ctx.respond(f"**An error has occurred!**\n\n```{error}```")
+
+def setup(bot):
+    bot.add_cog(ErrorHandler(bot))
