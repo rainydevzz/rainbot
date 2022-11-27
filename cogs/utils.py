@@ -40,5 +40,27 @@ class UtilsCog(discord.Cog):
             
         await ctx.interaction.edit_original_message(content="Deleted all roles under that filter!")
 
+    @discord.slash_command()
+    async def about(self, ctx):
+        em = discord.Embed(title=f"About {self.bot.user.name}", description="Private bot for Rainy's server.", color=0x90ee90)
+        em.add_field(name="Dev", value="Rainy~#2571")
+        em.add_field(name="Library", value=f"Pycord {discord.__version__}")
+        em.set_thumbnail(url=self.bot.user.avatar.url)
+        await ctx.respond(embed=em)
+
+    @discord.slash_command()
+    @commands.has_permissions(manage_roles=True)
+    async def addrole(self, ctx, member:discord.Member, role:discord.Role):
+        em = discord.Embed(description=f"Gave Role {role.mention} to {member.mention}", color=0x90ee90)
+        await member.add_roles(role, reason="RainBot Role Add")
+        await ctx.respond(embed=em, ephemeral=True)
+
+    @discord.slash_command()
+    @commands.has_permissions(manage_roles=True)
+    async def removerole(self, ctx, member:discord.Member, role:discord.Role):
+        em = discord.Embed(description=f"Removed Role {role.mention} from {member.mention}", color=0xff0000)
+        await member.remove_roles(role, reason="RainBot Role Remove")
+        await ctx.respond(embed=em, ephemeral=True)
+
 def setup(bot):
     bot.add_cog(UtilsCog(bot))

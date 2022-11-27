@@ -44,7 +44,7 @@ class Greets(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member:discord.Member):
         if member.name.startswith("!"):
-            member.edit(nick=member.name.replace("!", ""))
+            member.edit(nick=member.name.replace("!", "", 1))
 
         try:
             query = {"_id": member.guild.id}  
