@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import datetime
 
 from discord.ui import Modal, InputText
 from discord.ext import commands
@@ -46,6 +47,22 @@ class UtilsCog(discord.Cog):
         em.add_field(name="Dev", value="Rainy~#2571")
         em.add_field(name="Library", value=f"Pycord {discord.__version__}")
         em.set_thumbnail(url=self.bot.user.avatar.url)
+        await ctx.respond(embed=em)
+
+    @discord.slash_command()
+    async def memberinfo(self, ctx, member: discord.Option(discord.Member, "user to select", required=False)):
+        if member is None:
+            member = ctx.author
+        roles = ', '.join([r.name for r in member.roles if not r.name == "@everyone"])
+        if roles == '':
+            roles = "No Roles"
+        print(roles)
+        em = discord.Embed(title=f"Info for {member.name}", description="Date Format is M-D-Y", color=discord.Color.green())
+        em.add_field(name="Joined At", value=member.joined_at.strftime("%m/%d/%Y"))
+        em.add_field(name="Created At", value=member.created_at.strftime('%m/%d/%Y'))
+        em.add_field(name="Roles", value=f"```\n{roles}\n```")
+        em.set_thumbnail(url=member.avatar.url)
+        em.timestamp = datetime.datetime.now()
         await ctx.respond(embed=em)
 
     @discord.slash_command()
